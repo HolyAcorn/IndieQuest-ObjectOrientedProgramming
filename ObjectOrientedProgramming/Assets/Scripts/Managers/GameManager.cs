@@ -7,100 +7,77 @@ namespace MonsterQuest
 {
     public class GameManager : MonoBehaviour
     {
-        static List<string> pcNames = new List<string> { "Jazlyn", "Theron", "Dayana", "Rolando" };
-        static List<string> enemyTypes = new List<string> { "Orc", "Mage", "Troll" };
-        static List<int> enemyHPs = new List<int> { 15, 40, 84 };
-        static int conSave = 0;
-        static List<int> dcValue = new List<int> { 12, 20, 18 };
-        static Random random = new Random();
+        List<string> pcNames = new List<string> { "Jazlyn", "Theron", "Dayana", "Rolando" };
+        List<string> enemyTypes = new List<string> { "Orc", "Mage", "Troll" };
+        List<int> enemyHPs = new List<int> { 15, 40, 84 };
+        List<int> dcValue = new List<int> { 12, 20, 18 };
+        List<Monster> monsters = new List<Monster>();
+
+        Random random = new Random();
+        private BattleManager combatManager;
+
+        private GameState gameState;
+
+        private void Awake()
+        {
+            Transform battleTransform = transform.Find("Combat");
+            combatManager = battleTransform.GetComponent<BattleManager>();
+        }
+
         private void Start()
         {
+            NewGame();
+            Simulate();
+
+        }
+
+        private void NewGame()
+        {
+            List<Character> initialCharacterList = new List<Character>();
+            foreach (string name in pcNames)
+            {
+                Character character = new Character(name);
+                initialCharacterList.Add(character);
+            }
+            Party initialParty = new Party(initialCharacterList);
+            gameState = new GameState(initialParty);
 
 
+            for (int i = 0; i < enemyTypes.Count; i++)
+            {
+                Monster monster = new Monster(enemyTypes[i], enemyHPs[i], dcValue[i]);
+                monsters.Add(monster);
+            }
 
+        }
 
-
-            Console.Write("A party of warriors " + string.Join(", ", pcNames));
+        private void Simulate()
+        {
+            Console.Write("A party of warriors " + StringHelper.JoinWithAnd(pcNames));
             Console.Write(" descends into the dungeon.");
             Console.WriteLine("");
-            while (enemyTypes.Count > 0 && pcNames.Count > 0)
+            while(monsters.Count > 0 && gameState.party.characters.Count > 0)
             {
-                SimulateBattle(pcNames, enemyTypes[0], enemyHPs[0], dcValue[0]);
+                gameState.EnterCombatWithMonster(monsters[0]);
+                combatManager.SimulateBattle(gameState);
+                if (gameState.combat.monster.hitPoints <= 0)
+                {
+                    Console.WriteLine($"The {gameState.combat.monster.displayName} collapses and the heroes celebrate their victory! :D");
+                    monsters.RemoveAt(0);
+                    Console.WriteLine("");
+                }
 
             }
-            if (pcNames.Count > 0)
+            if (gameState.party.characters.Count > 0)
             {
-                Console.WriteLine("The players leave the dungeon, the surviving members are "+ string.Join(", ", pcNames));
+                Console.WriteLine("The players leave the dungeon, the surviving members are " + StringHelper.JoinWithAnd(pcNames));
             }
             else
             {
                 Console.WriteLine("The heroes all die in the dungeon.");
             }
-
         }
-        static void SimulateBattle(List<string> pcNames, string enemy, int enemyTotalHP, int savingThrowDC)
-        {
-
-            int hitTarget = 0;
-
-            int greatsword = 0;
-
-            Console.WriteLine($"A {enemy} with {enemyTotalHP} HP appears!");
-
-            while (enemyTotalHP > 0)
-            {
-                foreach (string name in pcNames)
-                {
-                    greatsword = DiceRoll(2, 6);
-                    enemyTotalHP -= greatsword;
-                    if (enemyTotalHP < 0 || enemyTotalHP == 0)
-                    {
-                        enemyTotalHP = 0;
-                        Console.WriteLine($"{name} hits the {enemy} for {greatsword}. The {enemy} has {enemyTotalHP} HP left.");
-                        break;
-                    }
-                    Console.WriteLine($"{name} hits the {enemy} for {greatsword}. The {enemy} has {enemyTotalHP} HP left.");
-
-                }
-                hitTarget = random.Next(0, pcNames.Count);
-                conSave = DiceRoll(1, 20, 5);
-                Console.WriteLine($"The {enemy} attacks {pcNames[hitTarget]}. They roll a constituion save with DC {savingThrowDC} and rolls {conSave}");
-                if (conSave < savingThrowDC)
-                {
-                    Console.WriteLine($"{pcNames[hitTarget]} fails their check and is killed. :c");
-                    Console.WriteLine("");
-                    pcNames.RemoveAt(hitTarget);
-                    if (pcNames.Count == 0)
-                    {
-                        Console.WriteLine("Game over. :c");
-                        break;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine($"{pcNames[hitTarget]} succeeds their saving throw.");
-                    Console.WriteLine("");
-                }
-            }
-            if (enemyTotalHP == 0)
-            {
-                Console.WriteLine("The enemy collapses and the heroes celebrate their victory! :D");
-                enemyHPs.RemoveAt(0);
-                enemyTypes.RemoveAt(0);
-                dcValue.RemoveAt(0);
-                Console.WriteLine("");
-            }
-        }
-        static int DiceRoll(int numberOfRolls, int diceSides, int fixedBonus = 0)
-        {
-            int result = 0;
-            for (int i = 0; i < numberOfRolls; i++)
-            {
-                result += random.Next(1, diceSides + 1);
-            }
-            result += fixedBonus;
-            return result;
-
-        }
+       
+        
     }
 }
