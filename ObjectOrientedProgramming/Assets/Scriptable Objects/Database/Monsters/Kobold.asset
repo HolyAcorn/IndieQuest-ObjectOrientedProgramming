@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eabb4c39e7d3cd498e53d740c18becf, type: 3}
+  m_Name: Kobold
+  m_EditorClassIdentifier: 
+  displayName: Kobold
+  alignment: Lawful Evil
+  hitPointsRoll: 2d6-2
+  armorClass: 12
+  armorType: {fileID: 0}
+  weaponTypes:
+  - {fileID: 11400000, guid: 1db1d9f789dc77f4095d6e890e26cb41, type: 2}
+  - {fileID: 11400000, guid: eaa3952e17a4c5f47a39e93313a9ad44, type: 2}
+  bodySprite: {fileID: 21300000, guid: 55524b0152da144b29f8d4d0089ef572, type: 3}
+  sizeCategory: 2

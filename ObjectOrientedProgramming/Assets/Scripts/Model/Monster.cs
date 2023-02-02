@@ -5,26 +5,22 @@ using UnityEngine;
 
 namespace MonsterQuest
 {
-    public class Monster
+    public class Monster : Creature
     {
-
-
-        public string displayName { get; private set; }
-
-        public int hitPoints { get; private set; }
+        private static readonly bool[] _deathSavingThrows = Array.Empty<bool>();
 
         public int savingThrowDC { get; private set; }
+        public MonsterType type { get; private set; }
 
-        public Monster(string displayName, int hitPoints, int savingThrowDC)
+        public override IEnumerable<bool> deathSavingThrows => _deathSavingThrows;
+
+        public Monster(MonsterType type) : base(type.displayName, type.bodySprite, type.sizeCategory)
         {
-            this.displayName = displayName;
-            this.hitPoints = hitPoints;
-            this.savingThrowDC = savingThrowDC;
+            this.type = type;
+            base.hitPointsMaximum = DiceHelper.Roll(type.hitPointsRoll);
+            Initialize();
         }
         
-        public void ReactToDamage(int damageAmount)
-        {
-            hitPoints = Math.Max(0, hitPoints - damageAmount);
-        }
+        
     }
 }
