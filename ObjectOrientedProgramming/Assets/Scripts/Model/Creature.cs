@@ -8,6 +8,8 @@ namespace MonsterQuest
 {
     public abstract class Creature
     {
+        public abstract IEnumerable<bool> deathSavingThrows { get; }
+
         public string displayName { get; private set; }
         public Sprite bodySprite { get; private set; }
         public int hitPointsMaximum;
@@ -19,7 +21,6 @@ namespace MonsterQuest
         public readonly float spaceInFeet;
         public CreaturePresenter presenter { get; private set; }
 
-        public abstract IEnumerable<bool> deathSavingThrows { get; }
         public int deathSavingThrowSuccesses => deathSavingThrows.Count(result => result);
         public int deathSavingThrowFailures => deathSavingThrows.Count(result => !result);
 

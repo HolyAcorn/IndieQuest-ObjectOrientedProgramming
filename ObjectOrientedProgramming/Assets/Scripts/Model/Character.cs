@@ -8,6 +8,7 @@ namespace MonsterQuest
     public class Character : Creature
     {
         private List<bool> _deathSavingThrows = new List<bool>();
+        public override IEnumerable<bool> deathSavingThrows => _deathSavingThrows;
 
         public WeaponType weaponType { get; private set; }
         public ArmorType armorType { get; private set; }
@@ -19,7 +20,6 @@ namespace MonsterQuest
             Initialize();
         }
 
-        public override IEnumerable<bool> deathSavingThrows => _deathSavingThrows;
 
         protected override IEnumerator TakeDamageAtZeroHitPoints(bool wasCriticalHit)
         {
@@ -90,7 +90,7 @@ namespace MonsterQuest
         public IEnumerator HandleUnconciousState()
         {
             // Unstable Unconcious Characters must make a death saving throw
-            if(lifeStatus != LifeStatus.StableUnconcious) yield break;
+            if(lifeStatus != LifeStatus.UnstableUnconcious) yield break;
 
             int deathSavingThrowRollResult = DiceHelper.Roll("d20");
 

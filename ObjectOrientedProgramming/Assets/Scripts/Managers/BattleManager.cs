@@ -31,14 +31,18 @@ namespace MonsterQuest
                 foreach (Character character in characterList)
                 {
                     if (character.lifeStatus == LifeStatus.Dead) continue;
-
+                    if (character.lifeStatus != LifeStatus.Conscious) 
+                    {
+                        yield return character.HandleUnconciousState();
+                        continue;
+                    }
                     yield return character.presenter.Attack();
                     damage = DiceHelper.Roll(character.weaponType.damageRoll);
                     bool wasCriticalHit = damage <= -enemy.hitPointsMaximum;
                     yield return enemy.ReactToDamage(damage, wasCriticalHit);
                     Console.WriteLine($"{character.displayName} hits the {enemy.displayName} with their {character.weaponType.displayName} for {damage}. The {enemy.displayName} has {enemy.hitPoints} HP left.");
                     if (enemy.hitPoints <= 0) break;
-                    if (character.lifeStatus != LifeStatus.Conscious) yield return character.HandleUnconciousState();
+                    
 
                 }
                 if(enemy.hitPoints > 0)
@@ -57,7 +61,6 @@ namespace MonsterQuest
                     Console.WriteLine($"The {enemy.displayName} attacks {hitTarget.displayName} with its {enemy.type.weaponTypes[weaponToUse].displayName} & deals {damage} damage.");
 
                     yield return hitTarget.ReactToDamage(damage, wasCriticalHit);
-
                     if (hitTarget.lifeStatus == LifeStatus.Dead)
                     {
                         Console.WriteLine($"{hitTarget.displayName} is killed.");
