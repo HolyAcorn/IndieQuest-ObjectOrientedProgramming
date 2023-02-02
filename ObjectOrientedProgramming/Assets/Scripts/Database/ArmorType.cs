@@ -7,7 +7,7 @@ namespace MonsterQuest
     [CreateAssetMenu(fileName ="ArmorType", menuName ="Scriptable Objects/ArmorType")]
     public class ArmorType : ItemType
     {
-        
+        public int armorClass;
         public ArmorCategory category;
     }
 }

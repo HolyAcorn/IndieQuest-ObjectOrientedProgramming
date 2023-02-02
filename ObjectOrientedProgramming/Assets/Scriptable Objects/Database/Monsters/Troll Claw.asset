@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Claw
   weight: 0
-  damageRoll: 2d6+4
+  damageRoll: 2d6

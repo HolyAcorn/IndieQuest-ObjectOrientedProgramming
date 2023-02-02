@@ -60,5 +60,16 @@ namespace MonsterQuest
             }
             return finalOutput;
         }
+
+        public static string ToUpperFirst(this string s)
+        {
+            if (string.IsNullOrEmpty(s)) return "";
+
+            char[] letters = s.ToCharArray();
+
+            letters[0] = char.ToUpper(letters[0]);
+
+            return new string(letters);
+        }
     }
 }

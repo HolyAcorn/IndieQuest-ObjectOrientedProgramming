@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Bite
   weight: 0
-  damageRoll: 1d6 + 2
+  damageRoll: 1d6

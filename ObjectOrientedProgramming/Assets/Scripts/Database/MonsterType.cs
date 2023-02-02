@@ -15,5 +15,7 @@ namespace MonsterQuest
         public WeaponType[] weaponTypes;
         public Sprite bodySprite;
         public SizeCategory sizeCategory;
+
+        public AbilityScores abilityScores;
     }
 }

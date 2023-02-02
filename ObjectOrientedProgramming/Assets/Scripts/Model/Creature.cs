@@ -27,7 +27,12 @@ namespace MonsterQuest
         public LifeStatus lifeStatus { get; protected set; } = new LifeStatus();
 
         public int hitPoints { get; protected set; }
+        public abstract int armorClass { get; }
 
+        public bool isAlive => lifeStatus is not LifeStatus.Dead;
+        public bool isUnconcious => lifeStatus is not LifeStatus.UnstableUnconcious or LifeStatus.StableUnconcious;
+
+        public abstract AbilityScores abilityScores { get; }
 
         public Creature(string displayName, Sprite bodySprite, SizeCategory sizeCategory)
         {
@@ -37,18 +42,30 @@ namespace MonsterQuest
             spaceInFeet = SizeHelper.spaceInFeetPerSizeCategory[sizeCategory];
         }
 
-       // public abstract IAction TakeTurn(GameState gameState);
+        public abstract IAction TakeTurn(GameState gameState);
 
-        public virtual IEnumerator ReactToDamage(int damageAmount, bool wasCriticalHit)
+        public IEnumerator ReactToDamage(int damageAmount, bool wasCriticalHit)
         {
             hitPoints -= damageAmount;
             if (hitPoints <= 0) 
             {
+                hitPoints = 0;
                 yield return TakeDamageAtZeroHitPoints(wasCriticalHit);
             }
             else yield return presenter.TakeDamage();
 
 
+        }
+
+        public IEnumerator Heal(int amount)
+        {
+            yield return hitPoints += amount;
+            if (hitPoints > hitPointsMaximum)
+            {
+                hitPoints = hitPointsMaximum;
+            }
+            yield return presenter.RegainConsciousness();
+            yield return presenter.Heal();
         }
 
         protected virtual IEnumerator TakeDamageAtZeroHitPoints(bool wasCriticalHit)
@@ -68,6 +85,12 @@ namespace MonsterQuest
             presenter = _presenter;
         }
 
+        public Ability GetHigherAbility(Ability first, Ability second)
+        {
+            if (abilityScores[first].score > abilityScores[second].score) return first;
+            else return second;
+
+        }
 
     }
 }

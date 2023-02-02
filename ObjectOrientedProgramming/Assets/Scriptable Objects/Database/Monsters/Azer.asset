@@ -21,3 +21,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 368964abed83af443be9ff472e6398ee, type: 2}
   bodySprite: {fileID: 21300000, guid: c4e067472c3b8482c974dac88c53187a, type: 3}
   sizeCategory: 3
+  abilityScores:
+    <strength>k__BackingField:
+      score: 17
+    <dexterity>k__BackingField:
+      score: 12
+    <constitution>k__BackingField:
+      score: 15
+    <intelligence>k__BackingField:
+      score: 12
+    <wisdom>k__BackingField:
+      score: 13
+    <charisma>k__BackingField:
+      score: 10

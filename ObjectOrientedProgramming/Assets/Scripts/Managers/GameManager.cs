@@ -77,7 +77,7 @@ namespace MonsterQuest
             }
 
 
-            if (gameState.party.characters.Count > 0)
+            if (gameState.party.aliveCount > 0)
             {
                 Console.WriteLine("The players leave the dungeon, the surviving members are " + StringHelper.JoinWithAnd(pcNames));
             }
