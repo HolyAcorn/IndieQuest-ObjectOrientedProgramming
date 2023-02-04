@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:TextField picking-mode="Ignore" value="filler text" text="filler text" binding-path="displayName" focusable="true" name="Name" style="height: auto; font-size: 21px;" />
+    <ui:GroupBox style="align-items: stretch; flex-direction: row; justify-content: space-around; flex-basis: auto; position: relative; font-size: 16px; padding-left: 0; padding-top: 0; padding-bottom: 0; flex-wrap: nowrap;">
+        <uie:EnumField value="Center" binding-path="sizeCategory" name="SizeCategory" style="max-width: none;" />
+        <ui:TextField picking-mode="Ignore" value="filler text" text="filler text" name="Alignment" binding-path="alignment" style="justify-content: space-around; width: auto;" />
+    </ui:GroupBox>
+    <uie:PropertyField name="ArmorClass" binding-path="armorClass" />
+    <ui:TextField picking-mode="Ignore" label="Hit Point" value="6d6" text="filler text" name="HitPoints" binding-path="hitPointsRoll" />
+    <uie:PropertyField name="ArmorType" binding-path="armorType" />
+    <uie:PropertyField name="WeaponType" binding-path="weaponTypes" />
+    <uie:PropertyField binding-path="abilityScores" name="AbilityScores" />
+</ui:UXML>
