@@ -704,6 +704,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterTypes:
+  - {fileID: 11400000, guid: 7b525f23f58f5bc46a89fc7729978674, type: 2}
   - {fileID: 11400000, guid: 7468277228a82bc408a0efcb7f57fa92, type: 2}
   - {fileID: 11400000, guid: 97ff5320585538c48a56c6b93c0f5492, type: 2}
   - {fileID: 11400000, guid: 9f8a730247eda094799fd2ab2dc2e3ff, type: 2}
@@ -711,7 +712,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 911a4886d4687094b905617a510730ff, type: 2}
   characterSprites:
   - {fileID: 21300000, guid: 956386156c63c4eee816fc62eaa55e2c, type: 3}
-  - {fileID: 21300000, guid: 05200a5325ada4d1dbd78ee326031452, type: 3}
+  - {fileID: 21300000, guid: 674a45a2e4c6e4392bc8cd791ed443c0, type: 3}
   - {fileID: 21300000, guid: e902acf33b7bc4135b6e250d8c77ad21, type: 3}
   - {fileID: 21300000, guid: e12d725ecf6954adf9e66d736a1d0c22, type: 3}
 --- !u!4 &1066135998

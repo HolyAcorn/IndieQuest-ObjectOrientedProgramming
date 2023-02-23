@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEditor;
 using UnityEngine.UIElements;
 
@@ -12,11 +13,26 @@ namespace MonsterQuest
         {
             VisualElement monsterVisual = new VisualElement();
 
+
+            DropdownField dropdown = new DropdownField();
+            string[] monsters = MonsterTypeImporter.monsterIndexNames;
+            dropdown.choices = monsters.ToList();
+            monsterVisual.Add(dropdown);
+
             monsterTypeXML.CloneTree(monsterVisual);
 
-
+            dropdown.RegisterValueChangedCallback(OnMonsterDataChangeEvent);
+            
 
             return monsterVisual;
+
+
+
+        }
+
+        private void OnMonsterDataChangeEvent(ChangeEvent<string> evt)
+        {
+            MonsterTypeImporter.ImportData(evt.newValue, (MonsterType)serializedObject.targetObject);
         }
     }
 }

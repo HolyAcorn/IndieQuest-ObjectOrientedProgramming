@@ -9,4 +9,5 @@
     <uie:PropertyField name="ArmorType" binding-path="armorType" />
     <uie:PropertyField name="WeaponType" binding-path="weaponTypes" />
     <uie:PropertyField binding-path="abilityScores" name="AbilityScores" />
+    <uie:PropertyField name="BodySprite" binding-path="bodySprite" label="Body Sprite" />
 </ui:UXML>
